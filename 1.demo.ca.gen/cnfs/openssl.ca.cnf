@@ -1,0 +1,20 @@
+ RANDFILE               = $ENV::HOME/.rnd
+
+ [ req ]
+ 
+ default_keyfile        = ca.pem.pem
+ distinguished_name     = req_distinguished_name
+ attributes             = req_attributes
+ prompt                 = no
+
+ [ req_distinguished_name ]
+ 
+ C                      = US
+ ST                     = TX
+ L                      = Austin
+ O                      = Gluu, Inc
+ OU                     = Gluu CA
+ CN                     = Gluu.CA
+ emailAddress           = support@gluu.org
+
+ [ req_attributes ]

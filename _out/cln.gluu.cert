@@ -1,0 +1,75 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 1 (0x1)
+        Signature Algorithm: ecdsa-with-SHA1
+        Issuer: C=US, ST=TX, L=Austin, O=Gluu, Inc, OU=Gluu CA, CN=Gluu.CA/emailAddress=support@gluu.org
+        Validity
+            Not Before: Jul 19 08:07:47 2022 GMT
+            Not After : Jul 18 08:07:47 2027 GMT
+        Subject: C=US, ST=Texas, L=Austin, O=Gluu, Inc, OU=Gluu Client, CN=Gluu.Cln/emailAddress=client@gluu.org
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:ba:81:d3:04:74:47:43:23:77:b7:3a:fb:3c:ed:
+                    82:f6:cb:91:5e:00:f0:7f:07:2b:f3:6c:d0:1b:fb:
+                    01:7f:cc:cb:65:7e:6b:26:5d:e4:c1:2d:d3:d9:54:
+                    c6:c2:c9:b0:85:e0:15:4f:65:ac:aa:70:f6:1d:da:
+                    d9:96:55:e8:05:6f:83:e4:db:79:ae:08:77:4d:3c:
+                    a3:a0:35:c1:53:b1:89:bc:dd:02:e9:81:50:0a:1a:
+                    dd:d8:18:d1:39:9a:65:bc:64:61:0e:77:83:2c:c3:
+                    c5:50:00:01:fd:ad:a8:1a:40:56:7b:f5:42:7d:ab:
+                    59:8e:77:4b:9e:a5:f7:de:d9:78:c6:8a:14:83:79:
+                    b6:4a:1a:3b:82:71:43:d5:f7:53:6e:17:7d:7a:6e:
+                    f2:a7:3d:18:e7:3f:64:27:64:d6:cf:3a:49:4d:6a:
+                    46:05:19:b1:6b:a9:84:55:4e:e8:f3:20:35:7d:3a:
+                    62:17:ae:42:60:6f:91:87:59:13:06:d2:cb:a0:5e:
+                    1e:8a:64:11:fb:f9:e4:e9:df:71:95:50:93:da:ed:
+                    87:a8:70:78:18:f6:dc:59:21:d1:83:15:8d:48:f0:
+                    9e:47:3e:8e:cd:c5:27:dc:fd:55:bd:e9:23:c2:e6:
+                    15:52:b6:73:fb:5f:85:89:f8:cb:48:12:fe:4f:f8:
+                    df:eb
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:TRUE
+            Netscape Cert Type: 
+                SSL Client
+            Netscape Comment: 
+                OpenSSL Generated Certificate
+            X509v3 Subject Key Identifier: 
+                C6:23:2E:1E:9E:7D:69:45:D4:15:EE:38:BE:F8:B1:4D:01:73:DD:30
+            X509v3 Authority Key Identifier: 
+                DirName:/C=US/ST=TX/L=Austin/O=Gluu, Inc/OU=Gluu CA/CN=Gluu.CA/emailAddress=support@gluu.org
+                serial:6A:B0:1F:7E:64:1B:C7:9F:AD:A4:BF:69:D5:03:B3:EF:00:4C:98:B0
+
+    Signature Algorithm: ecdsa-with-SHA1
+         30:44:02:20:40:b4:ab:69:d3:38:51:85:a7:f8:d1:0a:c6:0b:
+         d9:31:d0:f1:04:26:16:3b:d5:36:5a:48:3a:2b:86:e0:82:ba:
+         02:20:4d:de:d9:08:37:75:1f:2e:ea:82:fd:64:83:14:ea:0f:
+         b7:5f:07:10:a1:c3:e2:f3:26:c4:ea:08:59:57:81:73
+-----BEGIN CERTIFICATE-----
+MIID7TCCA5WgAwIBAgIBATAJBgcqhkjOPQQBMIGEMQswCQYDVQQGEwJVUzELMAkG
+A1UECAwCVFgxDzANBgNVBAcMBkF1c3RpbjESMBAGA1UECgwJR2x1dSwgSW5jMRAw
+DgYDVQQLDAdHbHV1IENBMRAwDgYDVQQDDAdHbHV1LkNBMR8wHQYJKoZIhvcNAQkB
+FhBzdXBwb3J0QGdsdXUub3JnMB4XDTIyMDcxOTA4MDc0N1oXDTI3MDcxODA4MDc0
+N1owgYsxCzAJBgNVBAYTAlVTMQ4wDAYDVQQIDAVUZXhhczEPMA0GA1UEBwwGQXVz
+dGluMRIwEAYDVQQKDAlHbHV1LCBJbmMxFDASBgNVBAsMC0dsdXUgQ2xpZW50MREw
+DwYDVQQDDAhHbHV1LkNsbjEeMBwGCSqGSIb3DQEJARYPY2xpZW50QGdsdXUub3Jn
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuoHTBHRHQyN3tzr7PO2C
+9suRXgDwfwcr82zQG/sBf8zLZX5rJl3kwS3T2VTGwsmwheAVT2WsqnD2HdrZllXo
+BW+D5Nt5rgh3TTyjoDXBU7GJvN0C6YFQChrd2BjROZplvGRhDneDLMPFUAAB/a2o
+GkBWe/VCfatZjndLnqX33tl4xooUg3m2Sho7gnFD1fdTbhd9em7ypz0Y5z9kJ2TW
+zzpJTWpGBRmxa6mEVU7o8yA1fTpiF65CYG+Rh1kTBtLLoF4eimQR+/nk6d9xlVCT
+2u2HqHB4GPbcWSHRgxWNSPCeRz6OzcUn3P1VvekjwuYVUrZz+1+FifjLSBL+T/jf
+6wIDAQABo4IBIzCCAR8wDAYDVR0TBAUwAwEB/zARBglghkgBhvhCAQEEBAMCB4Aw
+LAYJYIZIAYb4QgENBB8WHU9wZW5TU0wgR2VuZXJhdGVkIENlcnRpZmljYXRlMB0G
+A1UdDgQWBBTGIy4enn1pRdQV7ji++LFNAXPdMDCBrgYDVR0jBIGmMIGjoYGKpIGH
+MIGEMQswCQYDVQQGEwJVUzELMAkGA1UECAwCVFgxDzANBgNVBAcMBkF1c3RpbjES
+MBAGA1UECgwJR2x1dSwgSW5jMRAwDgYDVQQLDAdHbHV1IENBMRAwDgYDVQQDDAdH
+bHV1LkNBMR8wHQYJKoZIhvcNAQkBFhBzdXBwb3J0QGdsdXUub3JnghRqsB9+ZBvH
+n62kv2nVA7PvAEyYsDAJBgcqhkjOPQQBA0cAMEQCIEC0q2nTOFGFp/jRCsYL2THQ
+8QQmFjvVNlpIOiuG4IK6AiBN3tkIN3UfLuqC/WSDFOoPt18HEKHD4vMmxOoIWVeB
+cw==
+-----END CERTIFICATE-----
