@@ -2,34 +2,34 @@ Certificate:
     Data:
         Version: 3 (0x2)
         Serial Number: 1 (0x1)
-        Signature Algorithm: ecdsa-with-SHA1
-        Issuer: C=US, ST=TX, L=Austin, O=Gluu, Inc, OU=Gluu CA, CN=Gluu.CA/emailAddress=support@gluu.org
+        Signature Algorithm: sha384WithRSAEncryption
+        Issuer: C=US, ST=TX, L=Austin, O=Gluu, Inc, OU=Gluu CA RSA, CN=Gluu.CA.RSA/emailAddress=support@gluu.org
         Validity
-            Not Before: Jul 19 08:07:47 2022 GMT
-            Not After : Jul 18 08:07:47 2027 GMT
-        Subject: C=US, ST=Texas, L=Austin, O=Gluu, Inc, OU=Gluu Client, CN=Gluu.Cln/emailAddress=client@gluu.org
+            Not Before: Sep 27 13:42:00 2022 GMT
+            Not After : Sep 26 13:42:00 2027 GMT
+        Subject: C=US, ST=Texas, L=Austin, O=Gluu, Inc, OU=Gluu Client RSA, CN=Gluu.Cln.RSA/emailAddress=client@gluu.org
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
                 RSA Public-Key: (2048 bit)
                 Modulus:
-                    00:ba:81:d3:04:74:47:43:23:77:b7:3a:fb:3c:ed:
-                    82:f6:cb:91:5e:00:f0:7f:07:2b:f3:6c:d0:1b:fb:
-                    01:7f:cc:cb:65:7e:6b:26:5d:e4:c1:2d:d3:d9:54:
-                    c6:c2:c9:b0:85:e0:15:4f:65:ac:aa:70:f6:1d:da:
-                    d9:96:55:e8:05:6f:83:e4:db:79:ae:08:77:4d:3c:
-                    a3:a0:35:c1:53:b1:89:bc:dd:02:e9:81:50:0a:1a:
-                    dd:d8:18:d1:39:9a:65:bc:64:61:0e:77:83:2c:c3:
-                    c5:50:00:01:fd:ad:a8:1a:40:56:7b:f5:42:7d:ab:
-                    59:8e:77:4b:9e:a5:f7:de:d9:78:c6:8a:14:83:79:
-                    b6:4a:1a:3b:82:71:43:d5:f7:53:6e:17:7d:7a:6e:
-                    f2:a7:3d:18:e7:3f:64:27:64:d6:cf:3a:49:4d:6a:
-                    46:05:19:b1:6b:a9:84:55:4e:e8:f3:20:35:7d:3a:
-                    62:17:ae:42:60:6f:91:87:59:13:06:d2:cb:a0:5e:
-                    1e:8a:64:11:fb:f9:e4:e9:df:71:95:50:93:da:ed:
-                    87:a8:70:78:18:f6:dc:59:21:d1:83:15:8d:48:f0:
-                    9e:47:3e:8e:cd:c5:27:dc:fd:55:bd:e9:23:c2:e6:
-                    15:52:b6:73:fb:5f:85:89:f8:cb:48:12:fe:4f:f8:
-                    df:eb
+                    00:b9:0f:d6:8d:3b:2a:de:b5:df:6c:a0:44:42:6b:
+                    01:5c:4e:ae:06:9c:4f:05:57:41:3d:dc:0f:7c:10:
+                    e4:0f:ba:3b:55:6e:96:86:c1:81:12:e5:71:4e:0b:
+                    f6:f2:31:d2:50:f0:34:e2:ca:f8:1a:52:af:42:d8:
+                    c2:f1:58:27:ac:6c:d8:f0:2e:e2:10:11:a9:2a:e9:
+                    7d:89:77:90:d7:97:0f:a0:b9:eb:be:5a:09:4d:c8:
+                    f1:9b:11:0c:04:cf:0a:61:60:03:3b:dd:90:f6:77:
+                    8d:13:b5:36:01:f5:8a:13:9c:e9:d3:32:23:35:71:
+                    ff:20:e7:87:0a:ee:27:14:54:51:b5:85:92:b3:5d:
+                    03:0a:7c:35:94:0f:5e:af:c5:a9:f2:c8:9f:4f:ff:
+                    ff:2c:4b:57:df:46:3f:ae:d1:be:13:be:14:21:0c:
+                    22:0b:0d:91:9b:62:3f:29:01:f3:2f:a6:1f:e1:79:
+                    91:ef:eb:51:d3:4a:72:d7:8f:6e:a7:70:fb:7c:9c:
+                    ff:38:e0:a4:93:8d:2c:18:59:8f:b6:f5:b4:81:15:
+                    1e:83:92:39:2b:26:d5:ee:ef:06:05:e2:33:76:68:
+                    13:de:80:9e:e1:8b:be:77:14:95:d1:6f:8e:77:e6:
+                    e6:83:c1:f6:80:7f:4b:a1:35:c8:89:d9:22:78:b8:
+                    f5:75
                 Exponent: 65537 (0x10001)
         X509v3 extensions:
             X509v3 Basic Constraints: 
@@ -39,37 +39,52 @@ Certificate:
             Netscape Comment: 
                 OpenSSL Generated Certificate
             X509v3 Subject Key Identifier: 
-                C6:23:2E:1E:9E:7D:69:45:D4:15:EE:38:BE:F8:B1:4D:01:73:DD:30
+                23:1A:5C:D9:5F:14:73:CD:5E:FE:30:2C:71:C6:FE:79:24:44:B9:92
             X509v3 Authority Key Identifier: 
-                DirName:/C=US/ST=TX/L=Austin/O=Gluu, Inc/OU=Gluu CA/CN=Gluu.CA/emailAddress=support@gluu.org
-                serial:6A:B0:1F:7E:64:1B:C7:9F:AD:A4:BF:69:D5:03:B3:EF:00:4C:98:B0
+                DirName:/C=US/ST=TX/L=Austin/O=Gluu, Inc/OU=Gluu CA RSA/CN=Gluu.CA.RSA/emailAddress=support@gluu.org
+                serial:5D:BA:F2:13:AF:83:EC:9C:E5:1D:7F:4D:25:13:5A:41:13:AA:60:9F
 
-    Signature Algorithm: ecdsa-with-SHA1
-         30:44:02:20:40:b4:ab:69:d3:38:51:85:a7:f8:d1:0a:c6:0b:
-         d9:31:d0:f1:04:26:16:3b:d5:36:5a:48:3a:2b:86:e0:82:ba:
-         02:20:4d:de:d9:08:37:75:1f:2e:ea:82:fd:64:83:14:ea:0f:
-         b7:5f:07:10:a1:c3:e2:f3:26:c4:ea:08:59:57:81:73
+    Signature Algorithm: sha384WithRSAEncryption
+         17:f1:0c:c5:fd:e4:c4:5c:b8:6d:6d:9e:fe:76:d1:0b:23:34:
+         08:cd:eb:27:e1:1c:96:58:ca:fb:88:05:1c:d5:a2:70:97:52:
+         42:8b:a9:0e:86:2a:04:bd:6e:f8:3d:67:25:b2:91:02:d8:d9:
+         e6:09:40:29:0e:4d:41:cd:f5:77:03:69:90:29:97:e3:75:98:
+         f6:0c:aa:12:0e:b4:a7:03:82:02:64:56:b3:64:87:96:23:7c:
+         2c:d6:b7:22:88:0a:79:20:23:a7:af:c8:76:19:eb:6f:d5:70:
+         f7:9f:ca:e6:bc:a7:1a:b5:14:f1:2f:06:ae:0e:18:30:6f:0c:
+         3f:8e:81:26:2e:c1:90:1a:99:d7:08:3c:ba:38:00:4e:5e:26:
+         38:d1:22:82:66:72:8f:95:c4:28:ae:15:11:2e:09:55:3b:82:
+         90:f6:a4:49:cc:75:f3:7b:14:39:cf:ae:8d:95:ad:10:61:24:
+         23:a4:1b:f0:31:18:81:78:30:8a:6e:c3:ee:60:2b:95:e4:23:
+         55:a0:85:68:7e:c3:6c:88:07:4f:7b:df:1f:4c:cc:72:df:34:
+         69:d2:30:54:90:45:61:8e:8e:f6:96:4a:99:ea:87:75:90:96:
+         3f:3c:f1:49:cd:e2:57:92:fd:42:34:4d:97:7a:96:8b:60:48:
+         fb:1f:fe:c0
 -----BEGIN CERTIFICATE-----
-MIID7TCCA5WgAwIBAgIBATAJBgcqhkjOPQQBMIGEMQswCQYDVQQGEwJVUzELMAkG
-A1UECAwCVFgxDzANBgNVBAcMBkF1c3RpbjESMBAGA1UECgwJR2x1dSwgSW5jMRAw
-DgYDVQQLDAdHbHV1IENBMRAwDgYDVQQDDAdHbHV1LkNBMR8wHQYJKoZIhvcNAQkB
-FhBzdXBwb3J0QGdsdXUub3JnMB4XDTIyMDcxOTA4MDc0N1oXDTI3MDcxODA4MDc0
-N1owgYsxCzAJBgNVBAYTAlVTMQ4wDAYDVQQIDAVUZXhhczEPMA0GA1UEBwwGQXVz
-dGluMRIwEAYDVQQKDAlHbHV1LCBJbmMxFDASBgNVBAsMC0dsdXUgQ2xpZW50MREw
-DwYDVQQDDAhHbHV1LkNsbjEeMBwGCSqGSIb3DQEJARYPY2xpZW50QGdsdXUub3Jn
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuoHTBHRHQyN3tzr7PO2C
-9suRXgDwfwcr82zQG/sBf8zLZX5rJl3kwS3T2VTGwsmwheAVT2WsqnD2HdrZllXo
-BW+D5Nt5rgh3TTyjoDXBU7GJvN0C6YFQChrd2BjROZplvGRhDneDLMPFUAAB/a2o
-GkBWe/VCfatZjndLnqX33tl4xooUg3m2Sho7gnFD1fdTbhd9em7ypz0Y5z9kJ2TW
-zzpJTWpGBRmxa6mEVU7o8yA1fTpiF65CYG+Rh1kTBtLLoF4eimQR+/nk6d9xlVCT
-2u2HqHB4GPbcWSHRgxWNSPCeRz6OzcUn3P1VvekjwuYVUrZz+1+FifjLSBL+T/jf
-6wIDAQABo4IBIzCCAR8wDAYDVR0TBAUwAwEB/zARBglghkgBhvhCAQEEBAMCB4Aw
-LAYJYIZIAYb4QgENBB8WHU9wZW5TU0wgR2VuZXJhdGVkIENlcnRpZmljYXRlMB0G
-A1UdDgQWBBTGIy4enn1pRdQV7ji++LFNAXPdMDCBrgYDVR0jBIGmMIGjoYGKpIGH
-MIGEMQswCQYDVQQGEwJVUzELMAkGA1UECAwCVFgxDzANBgNVBAcMBkF1c3RpbjES
-MBAGA1UECgwJR2x1dSwgSW5jMRAwDgYDVQQLDAdHbHV1IENBMRAwDgYDVQQDDAdH
-bHV1LkNBMR8wHQYJKoZIhvcNAQkBFhBzdXBwb3J0QGdsdXUub3JnghRqsB9+ZBvH
-n62kv2nVA7PvAEyYsDAJBgcqhkjOPQQBA0cAMEQCIEC0q2nTOFGFp/jRCsYL2THQ
-8QQmFjvVNlpIOiuG4IK6AiBN3tkIN3UfLuqC/WSDFOoPt18HEKHD4vMmxOoIWVeB
-cw==
+MIIEyTCCA7GgAwIBAgIBATANBgkqhkiG9w0BAQwFADCBjDELMAkGA1UEBhMCVVMx
+CzAJBgNVBAgMAlRYMQ8wDQYDVQQHDAZBdXN0aW4xEjAQBgNVBAoMCUdsdXUsIElu
+YzEUMBIGA1UECwwLR2x1dSBDQSBSU0ExFDASBgNVBAMMC0dsdXUuQ0EuUlNBMR8w
+HQYJKoZIhvcNAQkBFhBzdXBwb3J0QGdsdXUub3JnMB4XDTIyMDkyNzEzNDIwMFoX
+DTI3MDkyNjEzNDIwMFowgZMxCzAJBgNVBAYTAlVTMQ4wDAYDVQQIDAVUZXhhczEP
+MA0GA1UEBwwGQXVzdGluMRIwEAYDVQQKDAlHbHV1LCBJbmMxGDAWBgNVBAsMD0ds
+dXUgQ2xpZW50IFJTQTEVMBMGA1UEAwwMR2x1dS5DbG4uUlNBMR4wHAYJKoZIhvcN
+AQkBFg9jbGllbnRAZ2x1dS5vcmcwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK
+AoIBAQC5D9aNOyretd9soERCawFcTq4GnE8FV0E93A98EOQPujtVbpaGwYES5XFO
+C/byMdJQ8DTiyvgaUq9C2MLxWCesbNjwLuIQEakq6X2Jd5DXlw+gueu+WglNyPGb
+EQwEzwphYAM73ZD2d40TtTYB9YoTnOnTMiM1cf8g54cK7icUVFG1hZKzXQMKfDWU
+D16vxanyyJ9P//8sS1ffRj+u0b4TvhQhDCILDZGbYj8pAfMvph/heZHv61HTSnLX
+j26ncPt8nP844KSTjSwYWY+29bSBFR6DkjkrJtXu7wYF4jN2aBPegJ7hi753FJXR
+b4535uaDwfaAf0uhNciJ2SJ4uPV1AgMBAAGjggErMIIBJzAMBgNVHRMEBTADAQH/
+MBEGCWCGSAGG+EIBAQQEAwIHgDAsBglghkgBhvhCAQ0EHxYdT3BlblNTTCBHZW5l
+cmF0ZWQgQ2VydGlmaWNhdGUwHQYDVR0OBBYEFCMaXNlfFHPNXv4wLHHG/nkkRLmS
+MIG2BgNVHSMEga4wgauhgZKkgY8wgYwxCzAJBgNVBAYTAlVTMQswCQYDVQQIDAJU
+WDEPMA0GA1UEBwwGQXVzdGluMRIwEAYDVQQKDAlHbHV1LCBJbmMxFDASBgNVBAsM
+C0dsdXUgQ0EgUlNBMRQwEgYDVQQDDAtHbHV1LkNBLlJTQTEfMB0GCSqGSIb3DQEJ
+ARYQc3VwcG9ydEBnbHV1Lm9yZ4IUXbryE6+D7JzlHX9NJRNaQROqYJ8wDQYJKoZI
+hvcNAQEMBQADggEBABfxDMX95MRcuG1tnv520QsjNAjN6yfhHJZYyvuIBRzVonCX
+UkKLqQ6GKgS9bvg9ZyWykQLY2eYJQCkOTUHN9XcDaZApl+N1mPYMqhIOtKcDggJk
+VrNkh5YjfCzWtyKICnkgI6evyHYZ62/VcPefyua8pxq1FPEvBq4OGDBvDD+OgSYu
+wZAamdcIPLo4AE5eJjjRIoJmco+VxCiuFREuCVU7gpD2pEnMdfN7FDnPro2VrRBh
+JCOkG/AxGIF4MIpuw+5gK5XkI1WghWh+w2yIB0973x9MzHLfNGnSMFSQRWGOjvaW
+Spnqh3WQlj888UnN4leS/UI0TZd6lotgSPsf/sA=
 -----END CERTIFICATE-----

@@ -1,20 +1,107 @@
- RANDFILE               = $ENV::HOME/.rnd
 
- [ req ]
+RANDFILE               = $ENV::HOME/.rnd
+
+[ req ]
  
- default_keyfile        = ca.pem.pem
- distinguished_name     = req_distinguished_name
- attributes             = req_attributes
- prompt                 = no
+default_keyfile        = ca.pem.pem
+distinguished_name     = req_distinguished_name
+attributes             = req_attributes
+prompt                 = no
 
- [ req_distinguished_name ]
+[ req_distinguished_name ]
  
- C                      = US
- ST                     = TX
- L                      = Austin
- O                      = Gluu, Inc
- OU                     = Gluu CA
- CN                     = Gluu.CA
- emailAddress           = support@gluu.org
+C                      = US
+ST                     = TX
+L                      = Austin
+O                      = Gluu, Inc
+OU                     = Gluu CA RSA
+CN                     = Gluu.CA.RSA
+emailAddress           = support@gluu.org
 
- [ req_attributes ]
+[ req_attributes ]
+
+[ ca ]
+
+default_ca	= CA_default		# The default ca section
+
+[ CA_default ]
+
+dir		= .
+
+certs		= $dir/certs		# Where the issued certs are kept
+crl_dir		= $dir/crl		# Where the issued crl are kept
+database	= $dir/index.txt	# database index file.
+					# several ctificates with same subject.
+new_certs_dir	= $dir/new_certs	# default place for new certs.
+
+certificate	= $dir/cacert.pem 	# The CA certificate
+serial		= $dir/serial 		# The current serial number
+crlnumber	= $dir/crlnumber	# the current crl number
+					# must be commented out to leave a V1 CRL
+crl		= $dir/crl.pem 		# The current CRL
+private_key	= $dir/private/cakey.pem# The private key
+RANDFILE	= $dir/private/.rand	# private random number file
+
+x509_extensions	= usr_cert		# The extentions to add to the cert
+
+name_opt 	= ca_default		# Subject Name options
+cert_opt 	= ca_default		# Certificate field options
+
+
+default_days	= 365			# how long to certify for
+default_crl_days= 30			# how long before next CRL
+default_md	= sha384		# which md to use.
+preserve	= no			# keep passed DN ordering
+
+policy		= policy_anything
+
+####################################################################
+
+[ usr_cert ]
+
+basicConstraints=CA:TRUE
+
+# This is OK for an SSL server.
+nsCertType			= client
+nsComment			= "OpenSSL Generated Certificate"
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+
+[ v3_req ]
+
+basicConstraints = CA:TRUE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+
+[ v3_ca ]
+
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid:always,issuer:always
+basicConstraints = CA:true
+
+[ crl_ext ]
+
+authorityKeyIdentifier=keyid:always,issuer:always
+
+[ proxy_cert_ext ]
+
+basicConstraints=CA:TRUE
+
+[ policy_match ]
+
+countryName		= match
+stateOrProvinceName	= match
+localityName            = match
+organizationName        = match
+organizationalUnitName  = optional
+commonName		= supplied
+emailAddress		= supplied
+
+[ policy_anything ]
+
+countryName             = optional
+stateOrProvinceName     = optional
+localityName            = optional
+organizationName        = optional
+organizationalUnitName  = optional
+commonName              = supplied
+emailAddress            = optional

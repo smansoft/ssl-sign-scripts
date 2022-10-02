@@ -13,8 +13,8 @@ C                      = US
 ST                     = Texas
 L                      = Austin
 O                      = Gluu, Inc
-OU                     = Gluu Client
-CN                     = Gluu.Cln
+OU                     = Gluu Client RSA
+CN                     = Gluu.Cln.RSA
 emailAddress           = client@gluu.org
 
 [ req_attributes ]
@@ -49,7 +49,7 @@ cert_opt 	= ca_default		# Certificate field options
 
 default_days	= 365			# how long to certify for
 default_crl_days= 30			# how long before next CRL
-default_md	= sha1			# which md to use.
+default_md	= sha384		# which md to use.
 preserve	= no			# keep passed DN ordering
 
 policy		= policy_anything

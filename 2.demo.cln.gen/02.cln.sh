@@ -7,6 +7,7 @@ KEY_FILE=cln.gluu.key
 CSR_FILE=cln.gluu.csr
 
 openssl genrsa -out "$OUT_DIR"/"$KEY_FILE" 2048
+#openssl ecparam -name prime256v1 -genkey -noout -out "$OUT_DIR"/"$KEY_FILE"
 
 echo '---------------------------------------------------------------------'
 echo 'CLN Key File'
