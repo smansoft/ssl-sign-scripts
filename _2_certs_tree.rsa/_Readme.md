@@ -96,6 +96,8 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 
 $ openssl genrsa -out ./rootca.key 4096
 
+$ openssl pkey -inform PEM -in ./rootca.key -text -noout
+
 $ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -key rootca.key -out rootca.crt
 or
 $ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -text -key rootca.key -out rootca.crt
@@ -157,12 +159,12 @@ certificate = $dir/user-gluu.org.crt
 database = $dir/certindex
 private_key = $dir/user-gluu.org.key
 serial = $dir/certserial
-default_days = 365
+default_days = 730
 default_md = sha384
 policy = gluuca_policy
 x509_extensions = gluuca_extensions
 crlnumber = $dir/crlnumber
-default_crl_days = 365
+default_crl_days = 730
 
 [ gluuca_policy ]
 commonName = supplied
@@ -191,6 +193,8 @@ basicConstraints = critical,CA:FALSE
 -----------------------------------------------------------------
 
 $ openssl genrsa -out ./user-gluu.org.key 4096
+
+$ openssl pkey -inform PEM -in ./user-gluu.org.key -text -noout
 
 $ openssl req -config ./user-gluu.org.conf -new -sha256 -key ./user-gluu.org.key -out ./user-gluu.org.csr
 

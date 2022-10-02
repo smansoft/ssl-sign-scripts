@@ -30,7 +30,7 @@ default_ca = gluuca
 
 [ crl_ext ]
 issuerAltName=issuer:copy
-authorityKeyIdentifier=keyid:always
+authorityKeyIdentifier=keyid
 
 [ gluuca ]
 dir = ./
@@ -59,7 +59,7 @@ organizationalUnitName = optional
 basicConstraints = critical,CA:TRUE,pathlen:0
 keyUsage = critical,any
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer
+authorityKeyIdentifier = keyid,issuer
 keyUsage = digitalSignature,cRLSign,keyCertSign
 extendedKeyUsage = serverAuth
 crlDistributionPoints = @crl_section
@@ -67,8 +67,8 @@ subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
 [alt_names]
-DNS.0 = Gluu Intermidiate CA 1
-DNS.1 = Gluu CA Intermidiate 1
+DNS.0 = Gluu Root RSA CA
+DNS.1 = Gluu Root CA RSA
 
 [crl_section]
 URI.0 = http://pki.gluu.org/GluuRoot.crl
@@ -104,6 +104,8 @@ $ openssl ca -config ./root-ca.conf -gencrl -keyfile rootca.key -cert rootca.crt
 
 $ touch ./intermediate-ca.conf
 
+-----------------------------------------------------------------
+
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
@@ -129,7 +131,7 @@ default_ca = gluuca
 
 [ crl_ext ]
 issuerAltName=issuer:copy
-authorityKeyIdentifier=keyid:always
+authorityKeyIdentifier=keyid
 
 [ gluuca ]
 dir = ./
@@ -139,12 +141,12 @@ certificate = $dir/intermediate1.crt
 database = $dir/certindex
 private_key = $dir/intermediate1.key
 serial = $dir/certserial
-default_days = 365
+default_days = 730
 default_md = sha1
 policy = gluuca_policy
 x509_extensions = gluuca_extensions
 crlnumber = $dir/crlnumber
-default_crl_days = 365
+default_crl_days = 730
 
 [ gluuca_policy ]
 commonName = supplied
@@ -158,7 +160,7 @@ organizationalUnitName = optional
 basicConstraints = critical,CA:FALSE
 keyUsage = critical,any
 subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer
+authorityKeyIdentifier = keyid,issuer
 keyUsage = digitalSignature, nonRepudiation, keyEncipherment
 extendedKeyUsage = clientAuth
 crlDistributionPoints = @crl_section
@@ -166,8 +168,8 @@ subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
 [alt_names]
-DNS.0 = example.com
-DNS.1 = example.org
+DNS.0 = Gluu Intermediate RSA CA
+DNS.1 = Gluu Intermediate CA RSA
 
 [crl_section]
 URI.0 = http://pki.gluu.org/GluuIntermidiate1.crl
@@ -193,7 +195,79 @@ $ openssl x509 -in ./intermediate1.crt -text
 
 -----------------------------------------------------------------
 
-$ touch ./user-gluu.ogr.conf 
+$ touch ./user-gluu.org.conf 
+
+-----------------------------------------------------------------
+
+RANDFILE               = $ENV::HOME/.rnd
+
+[ req ]
+
+default_keyfile        = cln.pem
+distinguished_name     = req_distinguished_name
+attributes             = req_attributes
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = US
+ST                     = Texas
+L                      = Austin
+O                      = Gluu, Inc
+OU                     = Gluu Client RSA
+CN                     = Gluu.Cln.RSA
+emailAddress           = client@gluu.org
+
+[req_attributes]
+
+[ ca ]
+default_ca = gluuca
+
+[ crl_ext ]
+nsComment="OpenSSL Generated Certificate"
+nsCertType=client
+
+issuerAltName=issuer:copy
+authorityKeyIdentifier=keyid
+subjectKeyIdentifier=hash
+
+[ gluuca ]
+dir = ./
+new_certs_dir = $dir
+unique_subject = no
+certificate = $dir/user-gluu.org.crt
+database = $dir/certindex
+private_key = $dir/user-gluu.org.key
+serial = $dir/certserial
+default_days = 730
+default_md = sha384
+policy = gluuca_policy
+x509_extensions = gluuca_extensions
+crlnumber = $dir/crlnumber
+default_crl_days = 730
+
+[ gluuca_policy ]
+commonName = supplied
+stateOrProvinceName = supplied
+countryName = optional
+emailAddress = optional
+organizationName = supplied
+organizationalUnitName = optional
+
+[ gluuca_extensions ]
+basicConstraints = critical,CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth
+
+[ v3_req ]
+basicConstraints = critical,CA:FALSE
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+authorityKeyIdentifier=keyid,issuer
+basicConstraints = critical,CA:FALSE
 
 -----------------------------------------------------------------
 
