@@ -8,7 +8,7 @@ $ touch ./root-ca.conf
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
- 
+
 distinguished_name     = req_distinguished_name
 attributes             = req_attributes
 prompt                 = no
@@ -29,8 +29,12 @@ emailAddress           = support@gluu.org
 default_ca = gluuca
 
 [ crl_ext ]
+nsComment="OpenSSL Generated Certificate"
+nsCertType=objCA,emailCA,sslCA
+
 issuerAltName=issuer:copy
 authorityKeyIdentifier=keyid
+subjectKeyIdentifier=hash
 
 [ gluuca ]
 dir = ./
@@ -41,7 +45,7 @@ database = $dir/certindex
 private_key = $dir/rootca.key
 serial = $dir/certserial
 default_days = 730
-default_md = sha1
+default_md = sha384
 policy = gluuca_policy
 x509_extensions = gluuca_extensions
 crlnumber = $dir/crlnumber
@@ -57,14 +61,22 @@ organizationalUnitName = optional
 
 [ gluuca_extensions ]
 basicConstraints = critical,CA:TRUE,pathlen:0
-keyUsage = critical,any
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature,cRLSign,keyCertSign
-extendedKeyUsage = serverAuth
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth,serverAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
+
+[ v3_req ]
+basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+basicConstraints = critical,CA:TRUE,pathlen:0
+authorityKeyIdentifier=keyid,issuer
 
 [alt_names]
 DNS.0 = Gluu Root RSA CA
@@ -83,6 +95,8 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 -----------------------------------------------------------------
 
 $ openssl genrsa -out ./rootca.key 4096
+
+$ openssl pkey -inform PEM -in ./rootca.key -text -noout
 
 $ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -key rootca.key -out rootca.crt
 or
@@ -157,15 +171,23 @@ organizationName = supplied
 organizationalUnitName = optional
 
 [ gluuca_extensions ]
-basicConstraints = critical,CA:FALSE
-keyUsage = critical,any
+basicConstraints = critical,CA:TRUE
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment
-extendedKeyUsage = clientAuth
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth,serverAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
+
+[ v3_req ]
+basicConstraints = critical,CA:TRUE
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+basicConstraints = critical,CA:TRUE
+authorityKeyIdentifier=keyid,issuer
 
 [alt_names]
 DNS.0 = Gluu Intermediate RSA CA
@@ -185,6 +207,8 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 
 $ openssl genrsa -out ./intermediate1.key 4096
 
+$ openssl pkey -inform PEM -in ./intermediate1.key -text -noout
+
 $ openssl req -config ./intermediate-ca.conf -new -sha256 -key intermediate1.key -out intermediate1.csr
 
 $ openssl req -in ./intermediate1.csr -text -noout
@@ -198,6 +222,7 @@ $ openssl x509 -in ./intermediate1.crt -text
 $ touch ./user-gluu.org.conf 
 
 -----------------------------------------------------------------
+
 
 RANDFILE               = $ENV::HOME/.rnd
 
@@ -272,6 +297,8 @@ basicConstraints = critical,CA:FALSE
 -----------------------------------------------------------------
 
 $ openssl genrsa -out ./user-gluu.org.key 4096
+
+$ openssl pkey -inform PEM -in ./user-gluu.org.key -text -noout
 
 $ openssl req -config ./user-gluu.org.conf -new -sha256 -key ./user-gluu.org.key -out ./user-gluu.org.csr
 

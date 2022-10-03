@@ -8,7 +8,7 @@ $ touch ./root-ca.conf
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
-
+ 
 distinguished_name     = req_distinguished_name
 attributes             = req_attributes
 prompt                 = no
@@ -19,8 +19,8 @@ C                      = US
 ST                     = TX
 L                      = Austin
 O                      = Gluu, Inc
-OU                     = Gluu CA RSA
-CN                     = Gluu.CA.RSA
+OU                     = Gluu CA ECDSA
+CN                     = Gluu.CA.ECDSA
 emailAddress           = support@gluu.org
 
 [ req_attributes ]
@@ -29,12 +29,8 @@ emailAddress           = support@gluu.org
 default_ca = gluuca
 
 [ crl_ext ]
-nsComment="OpenSSL Generated Certificate"
-nsCertType=objCA,emailCA,sslCA
-
 issuerAltName=issuer:copy
 authorityKeyIdentifier=keyid
-subjectKeyIdentifier=hash
 
 [ gluuca ]
 dir = ./
@@ -45,7 +41,7 @@ database = $dir/certindex
 private_key = $dir/rootca.key
 serial = $dir/certserial
 default_days = 730
-default_md = sha384
+default_md = sha1
 policy = gluuca_policy
 x509_extensions = gluuca_extensions
 crlnumber = $dir/crlnumber
@@ -61,26 +57,18 @@ organizationalUnitName = optional
 
 [ gluuca_extensions ]
 basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = critical,any
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
-extendedKeyUsage = clientAuth,serverAuth
+keyUsage = digitalSignature,cRLSign,keyCertSign
+extendedKeyUsage = serverAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
-[ v3_req ]
-basicConstraints = critical,CA:TRUE,pathlen:0
-keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
-
-[ v3_ca ]
-subjectKeyIdentifier=hash
-basicConstraints = critical,CA:TRUE,pathlen:0
-authorityKeyIdentifier=keyid,issuer
-
 [alt_names]
-DNS.0 = Gluu Root RSA CA
-DNS.1 = Gluu Root CA RSA
+DNS.0 = Gluu Root ECDSA CA
+DNS.1 = Gluu Root CA ECDSA
 
 [crl_section]
 URI.0 = http://pki.gluu.org/GluuRoot.crl
@@ -101,6 +89,8 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 # prime256v1: X9.62/SECG curve over a 256 bit prime field
 
 $ openssl ecparam -name secp384r1 -genkey -noout -out ./rootca.key
+
+$ openssl pkey -inform PEM -in ./rootca.key -text -noout
 
 $ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -key rootca.key -out rootca.crt
 or
@@ -138,8 +128,8 @@ C                      = US
 ST                     = TX
 L                      = Austin
 O                      = Gluu, Inc
-OU                     = Gluu Intermediate RSA
-CN                     = Gluu.Intermediate.RSA
+OU                     = Gluu Intermediate ECDSA
+CN                     = Gluu.Intermediate.ECDSA
 emailAddress           = support@gluu.org
 
 [ req_attributes ]
@@ -175,19 +165,27 @@ organizationName = supplied
 organizationalUnitName = optional
 
 [ gluuca_extensions ]
-basicConstraints = critical,CA:FALSE
-keyUsage = critical,any
+basicConstraints = critical,CA:TRUE
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment
-extendedKeyUsage = clientAuth
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth,serverAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
+[ v3_req ]
+basicConstraints = critical,CA:TRUE
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+basicConstraints = critical,CA:TRUE
+authorityKeyIdentifier=keyid,issuer
+
 [alt_names]
-DNS.0 = Gluu Intermediate RSA CA
-DNS.1 = Gluu Intermediate CA RSA
+DNS.0 = Gluu Intermediate ECDSA CA
+DNS.1 = Gluu Intermediate CA ECDSA
 
 [crl_section]
 URI.0 = http://pki.gluu.org/GluuIntermidiate1.crl
@@ -208,6 +206,8 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 # prime256v1: X9.62/SECG curve over a 256 bit prime field
 
 $ openssl ecparam -name secp384r1 -genkey -noout -out ./intermediate1.key
+
+$ openssl pkey -inform PEM -in ./intermediate1.key -text -noout
 
 $ openssl req -config ./intermediate-ca.conf -new -sha256 -key intermediate1.key -out intermediate1.csr
 
@@ -237,8 +237,8 @@ C                      = US
 ST                     = Texas
 L                      = Austin
 O                      = Gluu, Inc
-OU                     = Gluu Client RSA
-CN                     = Gluu.Cln.RSA
+OU                     = Gluu Client ECDSA
+CN                     = Gluu.Cln.ECDSA
 emailAddress           = client@gluu.org
 
 [req_attributes]
@@ -302,6 +302,8 @@ basicConstraints = critical,CA:FALSE
 # prime256v1: X9.62/SECG curve over a 256 bit prime field
 
 $ openssl ecparam -name secp384r1 -genkey -noout -out ./user-gluu.org.key
+
+$ openssl pkey -inform PEM -in ./user-gluu.org.key -text -noout
 
 $ openssl req -config ./user-gluu.org.conf -new -sha256 -key ./user-gluu.org.key -out ./user-gluu.org.csr
 

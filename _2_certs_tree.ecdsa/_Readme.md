@@ -102,6 +102,8 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 
 $ openssl ecparam -name secp384r1 -genkey -noout -out ./rootca.key
 
+$ openssl pkey -inform PEM -in ./rootca.key -text -noout
+
 $ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -key rootca.key -out rootca.crt
 or
 $ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -text -key rootca.key -out rootca.crt
@@ -203,6 +205,8 @@ basicConstraints = critical,CA:FALSE
 # prime256v1: X9.62/SECG curve over a 256 bit prime field
 
 $ openssl ecparam -name secp384r1 -genkey -noout -out ./user-gluu.org.key
+
+$ openssl pkey -inform PEM -in ./user-gluu.org.key -text -noout
 
 $ openssl req -config ./user-gluu.org.conf -new -sha256 -key ./user-gluu.org.key -out ./user-gluu.org.csr
 
