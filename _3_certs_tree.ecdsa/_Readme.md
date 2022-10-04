@@ -8,7 +8,7 @@ $ touch ./root-ca.conf
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
- 
+
 distinguished_name     = req_distinguished_name
 attributes             = req_attributes
 prompt                 = no
@@ -29,8 +29,12 @@ emailAddress           = support@gluu.org
 default_ca = gluuca
 
 [ crl_ext ]
+nsComment="OpenSSL Generated Certificate"
+nsCertType=objCA,emailCA,sslCA
+
 issuerAltName=issuer:copy
 authorityKeyIdentifier=keyid
+subjectKeyIdentifier=hash
 
 [ gluuca ]
 dir = ./
@@ -41,7 +45,7 @@ database = $dir/certindex
 private_key = $dir/rootca.key
 serial = $dir/certserial
 default_days = 730
-default_md = sha1
+default_md = sha384
 policy = gluuca_policy
 x509_extensions = gluuca_extensions
 crlnumber = $dir/crlnumber
@@ -57,14 +61,22 @@ organizationalUnitName = optional
 
 [ gluuca_extensions ]
 basicConstraints = critical,CA:TRUE,pathlen:0
-keyUsage = critical,any
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature,cRLSign,keyCertSign
-extendedKeyUsage = serverAuth
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth,serverAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
+
+[ v3_req ]
+basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+basicConstraints = critical,CA:TRUE,pathlen:0
+authorityKeyIdentifier=keyid,issuer
 
 [alt_names]
 DNS.0 = Gluu Root ECDSA CA
@@ -165,23 +177,15 @@ organizationName = supplied
 organizationalUnitName = optional
 
 [ gluuca_extensions ]
-basicConstraints = critical,CA:TRUE
+basicConstraints = critical,CA:FALSE
+keyUsage = critical,any
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
-extendedKeyUsage = clientAuth,serverAuth
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment
+extendedKeyUsage = clientAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
-
-[ v3_req ]
-basicConstraints = critical,CA:TRUE
-keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
-
-[ v3_ca ]
-subjectKeyIdentifier=hash
-basicConstraints = critical,CA:TRUE
-authorityKeyIdentifier=keyid,issuer
 
 [alt_names]
 DNS.0 = Gluu Intermediate ECDSA CA
