@@ -60,7 +60,7 @@ organizationName = supplied
 organizationalUnitName = optional
 
 [ gluuca_extensions ]
-basicConstraints = critical,CA:TRUE,pathlen:0
+basicConstraints = critical,CA:TRUE,pathlen:1
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
@@ -70,12 +70,12 @@ subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
 [ v3_req ]
-basicConstraints = critical,CA:TRUE,pathlen:0
+basicConstraints = critical,CA:TRUE,pathlen:1
 keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
 
 [ v3_ca ]
 subjectKeyIdentifier=hash
-basicConstraints = critical,CA:TRUE,pathlen:0
+basicConstraints = critical,CA:TRUE,pathlen:1
 authorityKeyIdentifier=keyid,issuer
 
 [alt_names]
@@ -177,15 +177,30 @@ organizationName = supplied
 organizationalUnitName = optional
 
 [ gluuca_extensions ]
-basicConstraints = critical,CA:FALSE
-keyUsage = critical,any
+basicConstraints = critical,CA:TRUE,pathlen:0
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment
-extendedKeyUsage = clientAuth
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth,serverAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
+
+[ v3_req ]
+basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+authorityKeyIdentifier=keyid,issuer
+
+[ v3_intermediate_ca ]
+subjectKeyIdentifier=hash
+basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+authorityKeyIdentifier=keyid,issuer
 
 [alt_names]
 DNS.0 = Gluu Intermediate ECDSA CA
@@ -294,11 +309,6 @@ authorityInfoAccess = @ocsp_section
 [ v3_req ]
 basicConstraints = critical,CA:FALSE
 keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
-
-[ v3_ca ]
-subjectKeyIdentifier=hash
-authorityKeyIdentifier=keyid,issuer
-basicConstraints = critical,CA:FALSE
 
 [alt_names]
 DNS.0 = Gluu ECDSA Client
