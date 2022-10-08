@@ -366,3 +366,7 @@ $ openssl x509 -in ./ocsp.crt -text
 $ cat ./rootca.crt ./intermediate1.crt > ./ocsp.chain
 
 -----------------------------------------------------------------
+
+openssl ocsp -index ./certindex -port 8080 -rsigner ./ocsp.crt -rkey ./ocsp.key -CA ./ocsp.chain -text -out log.txt
+                                                                                                                   
+-----------------------------------------------------------------
