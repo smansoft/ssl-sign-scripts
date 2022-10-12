@@ -158,7 +158,7 @@ database = $dir/certindex
 private_key = $dir/intermediate1.key
 serial = $dir/certserial
 default_days = 730
-default_md = sha1
+default_md = sha384
 policy = gluuca_policy
 x509_extensions = gluuca_extensions
 crlnumber = $dir/crlnumber
@@ -365,8 +365,12 @@ $ openssl x509 -in ./ocsp.crt -text
 
 $ cat ./rootca.crt ./intermediate1.crt > ./ocsp.chain
 
+$ openssl pkcs12 -export -out ./ocsp.p12 -inkey ./ocsp.key -in ./ocsp.crt -certfile ./ocsp.chain
+
 -----------------------------------------------------------------
 
-openssl ocsp -index ./certindex -port 8080 -rsigner ./ocsp.crt -rkey ./ocsp.key -CA ./ocsp.chain -text -out log.txt
-                                                                                                                   
+$ openssl ocsp -index ./certindex -port 8080 -rsigner ./ocsp.crt -rkey ./ocsp.key -CA ./ocsp.chain -text -out log.txt
+
+$ openssl ocsp -index ./certindex -port 8080 -rsigner ./ocsp.crt -rkey ./ocsp.key -CA ./ocsp.chain -CAfile ./ocsp.chain -text -out log.txt
+
 -----------------------------------------------------------------
