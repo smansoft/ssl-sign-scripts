@@ -8,7 +8,7 @@ $ touch ./root-ca.conf
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
- 
+
 distinguished_name     = req_distinguished_name
 attributes             = req_attributes
 prompt                 = no
@@ -19,8 +19,8 @@ C                      = US
 ST                     = TX
 L                      = Austin
 O                      = Gluu, Inc
-OU                     = Gluu CA RSA
-CN                     = Gluu.CA.RSA
+OU                     = Gluu CA ECDSA
+CN                     = Gluu.CA.ECDSA
 emailAddress           = support@gluu.org
 
 [ req_attributes ]
@@ -29,8 +29,12 @@ emailAddress           = support@gluu.org
 default_ca = gluuca
 
 [ crl_ext ]
+nsComment="OpenSSL Generated Certificate"
+nsCertType=objCA,emailCA,sslCA
+
 issuerAltName=issuer:copy
 authorityKeyIdentifier=keyid
+subjectKeyIdentifier=hash
 
 [ gluuca ]
 dir = ./
@@ -57,18 +61,26 @@ organizationalUnitName = optional
 
 [ gluuca_extensions ]
 basicConstraints = critical,CA:TRUE,pathlen:0
-keyUsage = critical,any
 subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature,cRLSign,keyCertSign
-extendedKeyUsage = serverAuth
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth,serverAuth
 crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
+[ v3_req ]
+basicConstraints = critical,CA:TRUE,pathlen:0
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ v3_ca ]
+subjectKeyIdentifier=hash
+basicConstraints = critical,CA:TRUE,pathlen:0
+authorityKeyIdentifier=keyid,issuer
+
 [alt_names]
-DNS.0 = Gluu Root RSA CA
-DNS.1 = Gluu Root CA RSA
+DNS.0 = Gluu Root ECDSA CA
+DNS.1 = Gluu Root CA ECDSA
 
 [crl_section]
 URI.0 = http://pki.gluu.org/GluuRoot.crl
@@ -82,7 +94,13 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 
 -----------------------------------------------------------------
 
-$ openssl genrsa -out ./rootca.key 4096
+# $ openssl genrsa -out ./rootca.key 4096
+
+# secp384r1 : NIST/SECG curve over a 384 bit prime field
+# secp521r1 : NIST/SECG curve over a 521 bit prime field
+# prime256v1: X9.62/SECG curve over a 256 bit prime field
+
+$ openssl ecparam -name secp384r1 -genkey -noout -out ./rootca.key
 
 $ openssl pkey -inform PEM -in ./rootca.key -text -noout
 
@@ -91,7 +109,7 @@ or
 $ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -text -key rootca.key -out rootca.crt
 
 $ openssl x509 -in ./rootca.crt -text
-    
+
 -----------------------------------------------------------------
 
 $ touch certindex
@@ -104,102 +122,7 @@ $ openssl ca -config ./root-ca.conf -gencrl -keyfile rootca.key -cert rootca.crt
 
 -----------------------------------------------------------------
 
-$ touch ./intermediate-ca.conf
-
------------------------------------------------------------------
-
-RANDFILE               = $ENV::HOME/.rnd
-
-[ req ]
- 
-distinguished_name     = req_distinguished_name
-attributes             = req_attributes
-prompt                 = no
-
-[ req_distinguished_name ]
- 
-C                      = US
-ST                     = TX
-L                      = Austin
-O                      = Gluu, Inc
-OU                     = Gluu Intermediate RSA
-CN                     = Gluu.Intermediate.RSA
-emailAddress           = support@gluu.org
-
-[ req_attributes ]
-
-[ ca ]
-default_ca = gluuca
-
-[ crl_ext ]
-issuerAltName=issuer:copy
-authorityKeyIdentifier=keyid
-
-[ gluuca ]
-dir = ./
-new_certs_dir = $dir
-unique_subject = no
-certificate = $dir/intermediate1.crt
-database = $dir/certindex
-private_key = $dir/intermediate1.key
-serial = $dir/certserial
-default_days = 730
-default_md = sha384
-policy = gluuca_policy
-x509_extensions = gluuca_extensions
-crlnumber = $dir/crlnumber
-default_crl_days = 730
-
-[ gluuca_policy ]
-commonName = supplied
-stateOrProvinceName = supplied
-countryName = optional
-emailAddress = optional
-organizationName = supplied
-organizationalUnitName = optional
-
-[ gluuca_extensions ]
-basicConstraints = critical,CA:FALSE
-keyUsage = critical,any
-subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid,issuer
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment
-extendedKeyUsage = clientAuth
-crlDistributionPoints = @crl_section
-subjectAltName  = @alt_names
-authorityInfoAccess = @ocsp_section
-
-[alt_names]
-DNS.0 = Gluu Intermediate RSA CA
-DNS.1 = Gluu Intermediate CA RSA
-
-[crl_section]
-URI.0 = http://pki.gluu.org/GluuIntermidiate1.crl
-URI.1 = http://pki.backup.com/GluuIntermidiate1.crl
-
-[ocsp_section]
-caIssuers;URI.0 = http://pki.gluu.org/GluuIntermediate1.crt
-caIssuers;URI.1 = http://pki.backup.com/GluuIntermediate1.crt
-OCSP;URI.0 = http://pki.gluu.org/ocsp/
-OCSP;URI.1 = http://pki.backup.com/ocsp/
-
------------------------------------------------------------------
-
-$ openssl genrsa -out ./intermediate1.key 4096
-
-$ openssl pkey -inform PEM -in ./intermediate1.key -text -noout
-
-$ openssl req -config ./intermediate-ca.conf -new -sha256 -key intermediate1.key -out intermediate1.csr
-
-$ openssl req -in ./intermediate1.csr -text -noout
-
-$ openssl ca -batch -config ./intermediate-ca.conf -days 1826 -notext -keyfile ./rootca.key -cert ./rootca.crt -in ./intermediate1.csr -out ./intermediate1.crt
-
-$ openssl x509 -in ./intermediate1.crt -text
-
------------------------------------------------------------------
-
-$ touch ./user-gluu.org.conf 
+$ touch ./user-gluu.ogr.conf 
 
 -----------------------------------------------------------------
 
@@ -217,8 +140,8 @@ C                      = US
 ST                     = Texas
 L                      = Austin
 O                      = Gluu, Inc
-OU                     = Gluu Client RSA
-CN                     = Gluu.Cln.RSA
+OU                     = Gluu Client ECDSA
+CN                     = Gluu.Cln.ECDSA
 emailAddress           = client@gluu.org
 
 [req_attributes]
@@ -277,8 +200,8 @@ authorityKeyIdentifier=keyid,issuer
 basicConstraints = critical,CA:FALSE
 
 [alt_names]
-DNS.0 = Gluu RSA Client
-DNS.1 = Gluu Client RSA
+DNS.0 = Gluu ECDSA Client
+DNS.1 = Gluu Client ECDSA
 
 [crl_section]
 URI.0 = http://pki.gluu.org/GluuClient.crl
@@ -292,7 +215,13 @@ OCSP;URI.1 = http://pki.backup.com/ocsp/
 
 -----------------------------------------------------------------
 
-$ openssl genrsa -out ./user-gluu.org.key 4096
+#$ openssl genrsa -out ./user-gluu.org.key 4096
+
+# secp384r1 : NIST/SECG curve over a 384 bit prime field
+# secp521r1 : NIST/SECG curve over a 521 bit prime field
+# prime256v1: X9.62/SECG curve over a 256 bit prime field
+
+$ openssl ecparam -name secp384r1 -genkey -noout -out ./user-gluu.org.key
 
 $ openssl pkey -inform PEM -in ./user-gluu.org.key -text -noout
 
@@ -300,12 +229,42 @@ $ openssl req -config ./user-gluu.org.conf -new -sha256 -key ./user-gluu.org.key
 
 $ openssl req -in ./user-gluu.org.csr -text -noout
 
-$ openssl ca -batch -config ./user-gluu.org.conf -days 1826 -notext -keyfile ./intermediate1.key -cert ./intermediate1.crt -in ./user-gluu.org.csr -out ./user-gluu.org.crt
+$ openssl ca -batch -config ./user-gluu.org.conf -days 1826 -notext -keyfile ./rootca.key -cert ./rootca.crt -in ./user-gluu.org.csr -out ./user-gluu.org.crt
 
 $ openssl x509 -in ./user-gluu.org.crt -text
 
-$ cat ./rootca.crt ./intermediate1.crt > ./user-gluu.org.chain
+$ cat ./rootca.crt > ./user-gluu.org.chain
 
 $ openssl pkcs12 -export -out ./user-gluu.org.p12 -inkey ./user-gluu.org.key -in ./user-gluu.org.crt -certfile ./user-gluu.org.chain
+
+-----------------------------------------------------------------
+
+# $ openssl genrsa -out ./ocsp.key 4096
+
+# secp384r1 : NIST/SECG curve over a 384 bit prime field
+# secp521r1 : NIST/SECG curve over a 521 bit prime field
+# prime256v1: X9.62/SECG curve over a 256 bit prime field
+
+$ openssl ecparam -name secp384r1 -genkey -noout -out ./ocsp.key
+
+$ openssl pkey -inform PEM -in ./ocsp.key -text -noout
+
+$ openssl req -config ./ocsp.conf -new -sha256 -key ./ocsp.key -out ./ocsp.csr
+
+$ openssl req -in ./ocsp.csr -text -noout
+
+$ openssl ca -batch -config ./ocsp.conf -days 1826 -notext -keyfile ./rootca.key -cert ./rootca.crt -in ./ocsp.csr -out ./ocsp.crt
+
+$ openssl x509 -in ./ocsp.crt -text
+
+$ cat ./rootca.crt > ./ocsp.chain
+
+$ openssl pkcs12 -export -out ./ocsp.p12 -inkey ./ocsp.key -in ./ocsp.crt -certfile ./ocsp.chain
+
+-----------------------------------------------------------------
+
+$ openssl ocsp -index ./certindex -port 8080 -rsigner ./ocsp.crt -rkey ./ocsp.key -CA ./ocsp.chain -text -out log.txt
+
+$ openssl ocsp -index ./certindex -port 8080 -rsigner ./ocsp.crt -rkey ./ocsp.key -CA ./ocsp.chain -CAfile ./ocsp.chain -text -out log.txt
 
 -----------------------------------------------------------------
