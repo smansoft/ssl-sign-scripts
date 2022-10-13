@@ -104,9 +104,9 @@ $ openssl ecparam -name secp384r1 -genkey -noout -out ./rootca.key
 
 $ openssl pkey -inform PEM -in ./rootca.key -text -noout
 
-$ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -key rootca.key -out rootca.crt
+$ openssl req -config ./root-ca.conf -new -sha256 -x509 -set_serial 4000 -days 1826 -key rootca.key -out rootca.crt
 or
-$ openssl req -config ./root-ca.conf -new -sha256 -x509 -days 1826 -text -key rootca.key -out rootca.crt
+$ openssl req -config ./root-ca.conf -new -sha256 -x509 -set_serial 4000 -days 1826 -text -key rootca.key -out rootca.crt
 
 $ openssl x509 -in ./rootca.crt -text
 

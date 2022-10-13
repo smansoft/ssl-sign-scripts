@@ -331,7 +331,7 @@ $ openssl ecparam -name secp384r1 -genkey -noout -out ./user-gluu.org.key
 
 $ openssl pkey -inform PEM -in ./user-gluu.org.key -text -noout
 
-$ openssl req -config ./user-gluu.org.conf -new -sha256 -key ./user-gluu.org.key -out ./user-gluu.org.csr
+$ openssl req -config ./user-gluu.org.conf -new -sha256 -set_serial 4000 -key ./user-gluu.org.key -out ./user-gluu.org.csr
 
 $ openssl req -in ./user-gluu.org.csr -text -noout
 
