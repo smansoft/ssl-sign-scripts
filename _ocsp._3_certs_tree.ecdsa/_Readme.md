@@ -8,11 +8,13 @@ $ touch ./root-ca.conf
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
+
 distinguished_name     = req_distinguished_name
 attributes             = req_attributes
 prompt                 = no
 
 [ req_distinguished_name ]
+ 
 C                      = US
 ST                     = TX
 L                      = Austin
@@ -63,7 +65,6 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
 extendedKeyUsage = clientAuth,serverAuth
-crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
@@ -80,15 +81,9 @@ authorityKeyIdentifier=keyid,issuer
 DNS.0 = Gluu Root ECDSA CA
 DNS.1 = Gluu Root CA ECDSA
 
-[ crl_section ]
-URI.0 = http://pki.gluu.org/GluuRoot.crl
-URI.1 = http://pki.backup.com/GluuRoot.crl
-
 [ ocsp_section ]
-caIssuers;URI.0 = http://pki.gluu.org/GluuRoot.crt
-caIssuers;URI.1 = http://pki.backup.com/GluuRoot.crt
-OCSP;URI.0 = http://pki.gluu.org/ocsp/
-OCSP;URI.1 = http://pki.backup.com/ocsp/
+caIssuers;URI.0 = http://ocsp.smansoft.net/gluu.chain
+OCSP;URI.0 = http://ocsp.smansoft.net:8080
 
 -----------------------------------------------------------------
 
@@ -127,11 +122,13 @@ $ touch ./intermediate-ca.conf
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
+ 
 distinguished_name     = req_distinguished_name
 attributes             = req_attributes
 prompt                 = no
 
 [ req_distinguished_name ]
+ 
 C                      = US
 ST                     = TX
 L                      = Austin
@@ -178,7 +175,6 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
 extendedKeyUsage = clientAuth,serverAuth
-crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
@@ -202,15 +198,9 @@ authorityKeyIdentifier=keyid,issuer
 DNS.0 = Gluu Intermediate ECDSA CA
 DNS.1 = Gluu Intermediate CA ECDSA
 
-[ crl_section ]
-URI.0 = http://pki.gluu.org/GluuIntermidiate1.crl
-URI.1 = http://pki.backup.com/GluuIntermidiate1.crl
-
 [ ocsp_section ]
-caIssuers;URI.0 = http://pki.gluu.org/GluuIntermediate1.crt
-caIssuers;URI.1 = http://pki.backup.com/GluuIntermediate1.crt
-OCSP;URI.0 = http://pki.gluu.org/ocsp/
-OCSP;URI.1 = http://pki.backup.com/ocsp/
+caIssuers;URI.0 = http://ocsp.smansoft.net/gluu.chain
+OCSP;URI.0 = http://ocsp.smansoft.net:8080
 
 -----------------------------------------------------------------
 
@@ -241,6 +231,7 @@ $ touch ./user-gluu.org.conf
 RANDFILE               = $ENV::HOME/.rnd
 
 [ req ]
+
 default_keyfile        = cln.pem
 distinguished_name     = req_distinguished_name
 attributes             = req_attributes
@@ -297,7 +288,6 @@ subjectKeyIdentifier = hash
 authorityKeyIdentifier = keyid,issuer
 keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
 extendedKeyUsage = clientAuth
-crlDistributionPoints = @crl_section
 subjectAltName  = @alt_names
 authorityInfoAccess = @ocsp_section
 
@@ -309,15 +299,9 @@ keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyA
 DNS.0 = Gluu ECDSA Client
 DNS.1 = Gluu Client ECDSA
 
-[ crl_section ]
-URI.0 = http://pki.gluu.org/GluuClient.crl
-URI.1 = http://pki.backup.com/GluuClient.crl
-
 [ ocsp_section ]
-caIssuers;URI.0 = http://pki.gluu.org/GluuClient.crt
-caIssuers;URI.1 = http://pki.backup.com/GluuClient.crt
-OCSP;URI.0 = http://pki.gluu.org/ocsp/
-OCSP;URI.1 = http://pki.backup.com/ocsp/
+caIssuers;URI.0 = http://ocsp.smansoft.net/gluu.chain
+OCSP;URI.0 = http://ocsp.smansoft.net:8080
 
 -----------------------------------------------------------------
 
@@ -342,6 +326,86 @@ $ openssl x509 -in ./user-gluu.org.crt -text
 $ cat ./rootca.crt ./intermediate1.crt > ./user-gluu.org.chain
 
 $ openssl pkcs12 -export -out ./user-gluu.org.p12 -inkey ./user-gluu.org.key -in ./user-gluu.org.crt -certfile ./user-gluu.org.chain
+
+-----------------------------------------------------------------
+
+$ touch ./ocsp.conf
+
+-----------------------------------------------------------------
+
+RANDFILE               = $ENV::HOME/.rnd
+
+[ req ]
+default_keyfile        = cln.pem
+distinguished_name     = req_distinguished_name
+attributes             = req_attributes
+prompt                 = no
+
+[ req_distinguished_name ]
+C                      = US
+ST                     = Texas
+L                      = Austin
+O                      = Gluu, Inc
+OU                     = Gluu OCSP ECDSA
+CN                     = Gluu.OCSP.ECDSA
+emailAddress           = ocsp@gluu.org
+
+[ req_attributes ]
+
+[ ca ]
+default_ca = gluuca
+
+[ crl_ext ]
+nsComment="OpenSSL Generated Certificate"
+nsCertType=client
+
+issuerAltName=issuer:copy
+authorityKeyIdentifier=keyid
+subjectKeyIdentifier=hash
+
+[ gluuca ]
+dir = ./
+new_certs_dir = $dir
+unique_subject = no
+certificate = $dir/ocsp.crt
+database = $dir/certindex
+private_key = $dir/ocsp.key
+serial = $dir/certserial
+default_days = 730
+default_md = sha384
+policy = gluuca_policy
+x509_extensions = gluuca_extensions
+crlnumber = $dir/crlnumber
+default_crl_days = 730
+
+[ gluuca_policy ]
+commonName = supplied
+stateOrProvinceName = supplied
+countryName = optional
+emailAddress = optional
+organizationName = supplied
+organizationalUnitName = optional
+
+[ gluuca_extensions ]
+basicConstraints = critical,CA:FALSE
+subjectKeyIdentifier = hash
+authorityKeyIdentifier = keyid,issuer
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+extendedKeyUsage = clientAuth
+subjectAltName  = @alt_names
+authorityInfoAccess = @ocsp_section
+
+[ v3_req ]
+basicConstraints = critical,CA:FALSE
+keyUsage = digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment,keyAgreement,keyCertSign,cRLSign
+
+[ alt_names ]
+DNS.0 = Gluu ECDSA OCSP
+DNS.1 = Gluu OCSP ECDSA
+
+[ ocsp_section ]
+caIssuers;URI.0 = http://ocsp.smansoft.net/gluu.chain
+OCSP;URI.0 = http://ocsp.smansoft.net:8080
 
 -----------------------------------------------------------------
 
